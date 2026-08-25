@@ -29,13 +29,15 @@ function App() {
     <main id="top">
       <section className="hero">
         <div className="orb orb-one" /><div className="orb orb-two" />
-        <p className="eyebrow">Independent creative technology studio · Nigeria</p>
+        <div className="availability"><span /> Available for select projects · Ibadan, Nigeria</div>
+        <p className="eyebrow">Independent creative technology studio</p>
         <h1>Ideas with <i>impact.</i><br />Built to move.</h1>
         <p className="hero-copy">Alexion Studios creates polished websites, useful web apps, and interactive digital experiences for ambitious people and businesses.</p>
         <div className="hero-actions">
           <a className="button button-primary" href="#contact">Start a project <span>↗</span></a>
           <a className="text-link" href="#work">See our work <span>↓</span></a>
         </div>
+        <div className="hero-orbit"><span>WEB · APPS · GAMES · CREATIVE TECH ·</span><b>✦</b></div>
         <div className="scroll-note">SCROLL TO EXPLORE <span>↓</span></div>
       </section>
 
@@ -71,10 +73,13 @@ function App() {
       <section id="contact" className="contact-section">
         <p className="eyebrow">Have an idea?</p><h2>Let’s build<br /><i>something good.</i></h2>
         <p>Tell us what you want to create. We’ll help you find the next step.</p>
-        <a className="button button-light" href="mailto:alexionstudios@gmail.com">alexionstudios@gmail.com <span>↗</span></a>
+        <div className="contact-links">
+          <a className="button button-light" href="mailto:alexionstudios@gmail.com">alexionstudios@gmail.com <span>↗</span></a>
+          <a className="button button-github" href="https://github.com/Real-devalex" target="_blank" rel="noreferrer">GitHub / Real-devalex <span>↗</span></a>
+        </div>
       </section>
     </main>
-    <footer><a className="brand" href="#top"><span>✦</span> ALEXION <em>STUDIOS</em></a><p>© 2026 Alexion Studios. Built with purpose.</p><a href="#top">Back to top ↑</a></footer>
+    <footer><a className="brand" href="#top"><span>✦</span> ALEXION <em>STUDIOS</em></a><p>© 2026 Alexion Studios. Built with purpose.</p><div className="footer-links"><a href="https://github.com/Real-devalex" target="_blank" rel="noreferrer">GitHub ↗</a><a href="#top">Back to top ↑</a></div></footer>
   </>
 }
 
