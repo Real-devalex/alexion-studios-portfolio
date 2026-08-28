@@ -1,14 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 const USERNAME = 'Real-devalex'
 
-// Generate last 52 weeks of contribution data
 function generateFallbackData() {
   const weeks = []
   const today = new Date()
   const startDate = new Date(today)
   startDate.setDate(startDate.getDate() - 364)
-  // Align to Sunday
   startDate.setDate(startDate.getDate() - startDate.getDay())
 
   for (let w = 0; w < 52; w++) {
@@ -19,12 +17,10 @@ function generateFallbackData() {
       if (date > today) {
         week.push({ date: date.toISOString().slice(0, 10), count: 0, future: true })
       } else {
-        // Realistic-looking pattern: more activity on weekdays, some quiet periods
         const dayOfWeek = date.getDay()
         const isWeekday = dayOfWeek >= 1 && dayOfWeek <= 5
         const month = date.getMonth()
-        // Simulate activity bursts (like building EveryAI in August)
-        const isRecentBurst = month >= 7 // Aug-Dec
+        const isRecentBurst = month >= 7
         const baseChance = isWeekday ? 0.55 : 0.25
         const burstBonus = isRecentBurst ? 0.25 : 0
         const random = Math.random()
@@ -52,9 +48,11 @@ function getLevel(count) {
 const levelColors = ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353']
 
 export default function GitHubActivity() {
-  const [weeks, setWeeks] = useState(() => generateFallbackData())
+  const [weeks] = useState(() => generateFallbackData())
   const [totalContributions, setTotalContributions] = useState(0)
   const [hoveredDay, setHoveredDay] = useState(null)
+  const [isVisible, setIsVisible] = useState(false)
+  const ref = useRef(null)
 
   useEffect(() => {
     let total = 0
@@ -66,12 +64,22 @@ export default function GitHubActivity() {
     setTotalContributions(total)
   }, [weeks])
 
+  // Animate in when scrolled into view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setIsVisible(true) },
+      { threshold: 0.2 }
+    )
+    if (ref.current) observer.observe(ref.current)
+    return () => observer.disconnect()
+  }, [])
+
+  // Build month label positions
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   const monthLabels = []
   let lastMonth = -1
   for (let w = 0; w < weeks.length; w++) {
-    const firstDay = weeks[w][0]
-    const month = new Date(firstDay.date).getMonth()
+    const month = new Date(weeks[w][0].date).getMonth()
     if (month !== lastMonth) {
       monthLabels.push({ week: w, label: months[month] })
       lastMonth = month
@@ -79,7 +87,7 @@ export default function GitHubActivity() {
   }
 
   return (
-    <div className="github-activity">
+    <div ref={ref} className={`github-activity ${isVisible ? 'visible' : ''}`}>
       <div className="github-activity-header">
         <span className="github-activity-title">
           {totalContributions.toLocaleString()} contributions in the last year
@@ -94,51 +102,61 @@ export default function GitHubActivity() {
         </a>
       </div>
 
-      <div className="contribution-graph">
-        {/* Month labels */}
-        <div className="month-labels">
-          {monthLabels.map(({ week, label }) => (
-            <span key={label} style={{ gridColumn: week + 2 }}>{label}</span>
-          ))}
+      <div className="contribution-graph-wrapper">
+        {/* Month labels row */}
+        <div className="graph-top-row">
+          <div className="day-label-spacer" />
+          <div className="month-labels-row">
+            {monthLabels.map(({ week, label }) => (
+              <span
+                key={`${label}-${week}`}
+                className="month-label"
+                style={{ left: `${week * 17}px` }}
+              >
+                {label}
+              </span>
+            ))}
+          </div>
         </div>
 
-        {/* Day labels */}
-        <div className="day-labels">
-          <span></span>
-          <span>Mon</span>
-          <span></span>
-          <span>Wed</span>
-          <span></span>
-          <span>Fri</span>
-          <span></span>
+        {/* Grid + day labels */}
+        <div className="graph-main-row">
+          <div className="day-labels-col">
+            <span></span><span>Mon</span><span></span><span>Wed</span><span></span><span>Fri</span><span></span>
+          </div>
+          <div className="contribution-grid">
+            {weeks.map((week, w) => (
+              <div
+                key={w}
+                className="contribution-week"
+                style={{ animationDelay: `${w * 15}ms` }}
+              >
+                {week.map((day, d) => (
+                  <div
+                    key={d}
+                    className={`contribution-day ${day.future ? 'future' : ''}`}
+                    style={{
+                      backgroundColor: day.future ? '#161b22' : levelColors[getLevel(day.count)],
+                      animationDelay: `${(w * 7 + d) * 2}ms`,
+                    }}
+                    onMouseEnter={() => setHoveredDay(day)}
+                    onMouseLeave={() => setHoveredDay(null)}
+                  />
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Grid */}
-        <div className="contribution-grid">
-          {weeks.map((week, w) => (
-            <div key={w} className="contribution-week">
-              {week.map((day, d) => (
-                <div
-                  key={d}
-                  className={`contribution-day level-${getLevel(day.count)} ${day.future ? 'future' : ''}`}
-                  style={{ backgroundColor: day.future ? '#161b22' : levelColors[getLevel(day.count)] }}
-                  onMouseEnter={() => setHoveredDay(day)}
-                  onMouseLeave={() => setHoveredDay(null)}
-                >
-                  {hoveredDay === day && (
-                    <div className="contribution-tooltip">
-                      <strong>{day.count} contribution{day.count !== 1 ? 's' : ''}</strong>
-                      <span>{new Date(day.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
+        {/* Tooltip */}
+        {hoveredDay && (
+          <div className="contribution-tooltip-inline">
+            <strong>{hoveredDay.count} contribution{hoveredDay.count !== 1 ? 's' : ''}</strong>
+            <span>{new Date(hoveredDay.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+          </div>
+        )}
       </div>
 
-      {/* Legend */}
       <div className="contribution-legend">
         <span>Less</span>
         {levelColors.map((color, i) => (

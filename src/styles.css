@@ -22,27 +22,72 @@ nav a:hover,.text-link:hover { color:var(--primary); }.nav-cta { border-color:#3
 @keyframes float { 0%,100% { transform:translateY(0) rotate(-12deg); } 50% { transform:translateY(-16px) rotate(-7deg); } } @keyframes spin { to { transform:rotate(360deg); } } @keyframes counterspin { to { transform:rotate(-360deg); } } @keyframes rise { from { opacity:0; transform:translateY(25px); } to { opacity:1; transform:translateY(0); } } @keyframes pulse { 50% { box-shadow:0 0 0 10px rgba(44,231,218,0); } }
 
 /* GitHub Activity Graph */
-.github-activity { background:#0e1d2a; border:1px solid #1f4451; border-radius:8px; padding:24px; margin-top:50px; }
-.github-activity-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+.github-activity { background:#0e1d2a; border:1px solid #1f4451; border-radius:8px; padding:24px; margin-top:50px; opacity:0; transform:translateY(20px); transition:opacity .6s ease, transform .6s ease; overflow:hidden; }
+.github-activity.visible { opacity:1; transform:translateY(0); }
+.github-activity-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
 .github-activity-title { color:#8ae8df; font:12px 'DM Mono',monospace; letter-spacing:.04em; }
 .github-profile-link { color:var(--primary); font:11px 'DM Mono',monospace; opacity:.8; transition:opacity .2s; }
 .github-profile-link:hover { opacity:1; }
-.contribution-graph { display:flex; gap:4px; }
-.month-labels { display:flex; font:9px 'DM Mono',monospace; color:#5d7a82; margin-bottom:4px; margin-left:30px; }
-.month-labels span { min-width:42px; }
-.day-labels { display:flex; flex-direction:column; gap:2px; font:9px 'DM Mono',monospace; color:#5d7a82; padding-right:4px; justify-content:space-between; }
-.day-labels span { height:13px; display:flex; align-items:center; }
-.contribution-grid { display:flex; gap:3px; }
-.contribution-week { display:flex; flex-direction:column; gap:3px; }
-.contribution-day { width:13px; height:13px; border-radius:2px; cursor:pointer; position:relative; transition:outline .15s; }
-.contribution-day:hover { outline:2px solid rgba(255,255,255,.25); outline-offset:-1px; }
-.contribution-day.future { opacity:.15; cursor:default; }
-.contribution-tooltip { position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%); background:#1c2e3a; border:1px solid #2a4a58; border-radius:6px; padding:8px 12px; white-space:nowrap; z-index:10; pointer-events:none; }
-.contribution-tooltip strong { display:block; color:#e2e8f0; font-size:11px; font-weight:600; }
-.contribution-tooltip span { color:#6b8a94; font-size:10px; }
-.contribution-legend { display:flex; align-items:center; gap:4px; justify-content:flex-end; margin-top:12px; font:10px 'DM Mono',monospace; color:#5d7a82; }
-.legend-box { width:11px; height:11px; border-radius:2px; }
-@media(max-width:700px) { .github-activity { padding:16px; overflow-x:auto; } .contribution-day { width:10px; height:10px; } }
+.contribution-graph-wrapper { position:relative; }
+.graph-top-row { display:flex; margin-bottom:2px; }
+.day-label-spacer { width:28px; flex-shrink:0; }
+.month-labels-row { position:relative; height:14px; font:9px 'DM Mono',monospace; color:#5d7a82; }
+.month-label { position:absolute; top:0; }
+.graph-main-row { display:flex; gap:4px; }
+.day-labels-col { display:flex; flex-direction:column; gap:3px; font:9px 'DM Mono',monospace; color:#5d7a82; width:28px; flex-shrink:0; }
+.day-labels-col span { height:13px; display:flex; align-items:center; justify-content:flex-end; padding-right:4px; }
+.contribution-grid { display:flex; gap:3px; flex:1; min-width:0; }
+.contribution-week { display:flex; flex-direction:column; gap:3px; flex-shrink:0; animation:fadeCellIn .4s ease both; }
+.contribution-day { width:13px; height:13px; border-radius:2px; cursor:pointer; position:relative; transition:transform .15s ease, box-shadow .15s ease; }
+.contribution-day:hover { transform:scale(1.4); box-shadow:0 0 8px rgba(57,211,83,.4); z-index:5; }
+.contribution-day.future { opacity:.12; cursor:default; }
+.contribution-day.future:hover { transform:none; box-shadow:none; }
+.contribution-tooltip-inline { position:absolute; top:-32px; left:50%; transform:translateX(-50%); background:#1c2e3a; border:1px solid #2a4a58; border-radius:6px; padding:6px 12px; white-space:nowrap; z-index:20; animation:tooltipIn .15s ease; pointer-events:none; }
+.contribution-tooltip-inline strong { display:block; color:#e2e8f0; font-size:11px; font-weight:600; }
+.contribution-tooltip-inline span { color:#6b8a94; font-size:10px; }
+.contribution-legend { display:flex; align-items:center; gap:4px; justify-content:flex-end; margin-top:14px; font:10px 'DM Mono',monospace; color:#5d7a82; }
+.legend-box { width:11px; height:11px; border-radius:2px; transition:transform .2s; }
+.legend-box:hover { transform:scale(1.3); }
+
+/* Animations */
+@keyframes fadeCellIn { from { opacity:0; transform:scale(0); } to { opacity:1; transform:scale(1); } }
+@keyframes tooltipIn { from { opacity:0; transform:translateX(-50%) translateY(4px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }
+
+/* Service card animations */
+.service-card { animation:slideUp .5s ease both; }
+.service-card:nth-child(1) { animation-delay:.1s; }
+.service-card:nth-child(2) { animation-delay:.2s; }
+.service-card:nth-child(3) { animation-delay:.3s; }
+@keyframes slideUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+
+/* Project card animations */
+.project { animation:projectIn .6s ease both; }
+.project-1 { animation-delay:.1s; }
+.project-2 { animation-delay:.25s; }
+.project-3 { animation-delay:.4s; }
+@keyframes projectIn { from { opacity:0; transform:translateY(40px) scale(.97); } to { opacity:1; transform:translateY(0) scale(1); } }
+
+/* Tech tag hover */
+.tech-tag { transition:all .2s ease; cursor:default; }
+.tech-tag:hover { background:rgba(44,231,218,.15); border-color:rgba(44,231,218,.3); transform:translateY(-2px); }
+
+/* Project link pulse */
+.project-link { position:relative; }
+.project-link::after { content:''; position:absolute; bottom:-2px; left:0; width:0; height:1px; background:var(--primary); transition:width .3s ease; }
+.project-link:hover::after { width:100%; }
+
+/* Nav brand sparkle */
+.brand span { animation:sparkle 3s ease-in-out infinite; }
+@keyframes sparkle { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.6; transform:scale(1.15); } }
+
+/* Contact button glow */
+.button-light { transition:all .3s ease; }
+.button-light:hover { box-shadow:0 0 30px rgba(44,231,218,.3); transform:translateY(-3px); }
+
+/* Footer brand pulse */
+footer .brand span { animation:sparkle 4s ease-in-out infinite; }
+
+@media(max-width:700px) { .github-activity { padding:16px; overflow-x:auto; } .contribution-day { width:10px; height:10px; } .day-labels-col { width:22px; } .day-label-spacer { width:22px; } }
 
 /* Project tech tags */
 .project-tech { display:flex; flex-wrap:wrap; gap:6px; margin-top:14px; }
