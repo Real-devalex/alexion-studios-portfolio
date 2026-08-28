@@ -9,9 +9,39 @@ const services = [
 ]
 
 const projects = [
-  ['Coming soon', 'The Alexion Studio', 'The digital home for our work, ideas, and the people we help.'],
-  ['Concept project', 'Local business website', 'A high-converting website concept designed for a service business.'],
-  ['Concept project', 'Creator portfolio', 'A distinctive online home for a creator ready to be taken seriously.'],
+  {
+    label: 'Featured project',
+    name: 'EveryAI',
+    tagline: 'Your WhatsApp, Supercharged',
+    detail: 'AI-powered WhatsApp automation platform. Connect your WhatsApp, configure an AI assistant, and automate conversations with intelligence. Built with Next.js, TypeScript, SQLite, and Groq AI.',
+    tech: ['Next.js 16', 'TypeScript', 'Tailwind CSS', 'SQLite', 'Groq AI', 'Baileys'],
+    icon: '✦',
+    color: '#2ce7da',
+    link: 'https://github.com/Real-devalex/EveryAI',
+    status: 'Live',
+  },
+  {
+    label: 'Mobile app',
+    name: 'ADROP',
+    tagline: 'Seamless file transfer',
+    detail: 'A cross-platform file transfer app built with Expo and React Native. Share files between devices quickly and securely with a clean, modern interface.',
+    tech: ['Expo', 'React Native', 'TypeScript', 'Android', 'iOS'],
+    icon: '↗',
+    color: '#ff6b58',
+    link: null,
+    status: 'In development',
+  },
+  {
+    label: 'Coming soon',
+    name: 'The Alexion Studio',
+    tagline: 'The digital home for our work',
+    detail: 'The full Alexion Studios website — a showcase of our services, process, and the people we help. Currently in planning.',
+    tech: ['Next.js', 'React', 'Design System'],
+    icon: 'A',
+    color: '#805dff',
+    link: null,
+    status: 'Planning',
+  },
 ]
 
 function App() {
@@ -23,7 +53,7 @@ function App() {
         <a href="#work">Work</a>
         <a href="#about">About</a>
       </nav>
-      <a className="nav-cta" href="#contact">Let’s talk <span>↗</span></a>
+      <a className="nav-cta" href="#contact">Let's talk <span>↗</span></a>
     </header>
 
     <main id="top">
@@ -56,11 +86,25 @@ function App() {
       </section>
 
       <section id="work" className="section work-section">
-        <div className="section-heading row-heading"><div><p className="eyebrow">Selected work</p><h2>Proof in the <i>making.</i></h2></div><p>New projects are in progress.<br />Follow the journey as the studio grows.</p></div>
+        <div className="section-heading row-heading"><div><p className="eyebrow">Selected work</p><h2>Proof in the <i>making.</i></h2></div><p>Real projects, real code.<br />Built to solve real problems.</p></div>
         <div className="project-grid">
-          {projects.map(([label, name, detail], index) => <article className={`project project-${index + 1}`} key={name}>
-            <div className="project-visual"><span>{index === 0 ? 'A' : index === 1 ? '◒' : '✳'}</span></div>
-            <div className="project-info"><p>{label}</p><h3>{name}</h3><span>↗</span></div><p className="project-detail">{detail}</p>
+          {projects.map((project, index) => <article className={`project project-${index + 1}`} key={project.name}>
+            <div className="project-visual" style={{ background: project.color + '22' }}>
+              <span style={{ color: project.color }}>{project.icon}</span>
+            </div>
+            <div className="project-info">
+              <p>{project.label}</p>
+              <h3>{project.name}</h3>
+              <span>↗</span>
+            </div>
+            <p className="project-detail">{project.detail}</p>
+            <div className="project-tech">
+              {project.tech.map(t => <span className="tech-tag" key={t}>{t}</span>)}
+            </div>
+            <div className="project-meta">
+              <span className="project-status">{project.status}</span>
+              {project.link && <a className="project-link" href={project.link} target="_blank" rel="noreferrer">View on GitHub ↗</a>}
+            </div>
           </article>)}
         </div>
       </section>
@@ -71,8 +115,8 @@ function App() {
       </section>
 
       <section id="contact" className="contact-section">
-        <p className="eyebrow">Have an idea?</p><h2>Let’s build<br /><i>something good.</i></h2>
-        <p>Tell us what you want to create. We’ll help you find the next step.</p>
+        <p className="eyebrow">Have an idea?</p><h2>Let's build<br /><i>something good.</i></h2>
+        <p>Tell us what you want to create. We'll help you find the next step.</p>
         <div className="contact-links">
           <a className="button button-light" href="mailto:alexionstudios@gmail.com">alexionstudios@gmail.com <span>↗</span></a>
           <a className="button button-github" href="https://github.com/Real-devalex" target="_blank" rel="noreferrer">GitHub / Real-devalex <span>↗</span></a>
