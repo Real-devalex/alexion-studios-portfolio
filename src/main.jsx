@@ -1,5 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import GitHubActivity from './GitHubActivity'
 import './styles.css'
 
 const services = [
@@ -271,6 +272,7 @@ function App() {
             </article>
           })}
         </div>
+        <GitHubActivity />
       </section>
 
       <section id="about" className="about-section">
