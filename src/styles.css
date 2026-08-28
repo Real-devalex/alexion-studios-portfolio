@@ -28,10 +28,9 @@ nav a:hover,.text-link:hover { color:var(--primary); }.nav-cta { border-color:#3
 .project-status { font:10px 'DM Mono',monospace; color:#8a9498; text-transform:uppercase; letter-spacing:.08em; }
 .project-link { font:11px 'DM Mono',monospace; color:var(--primary); letter-spacing:.04em; transition:opacity .2s; }
 .project-link:hover { opacity:.7; }
-.project-1 .project-visual { background:rgba(44,231,218,.1); }
-.project-1 .project-visual span { color:#2ce7da; }
-.project-2 .project-visual { background:rgba(255,107,88,.1); }
-.project-2 .project-visual span { color:#ff6b58; }
-.project-3 .project-visual { background:rgba(128,93,255,.1); }
-.project-3 .project-visual span { color:#805dff; }
+.project-svg { width:100%; height:100%; object-fit:cover; border-radius:6px; }
+.project-visual { display:flex; align-items:center; justify-content:center; overflow:hidden; }
+.project-1 .project-visual { background:#0a1628; }
+.project-2 .project-visual { background:#1a0f0a; }
+.project-3 .project-visual { background:#0f0a1e; }
 @media(max-width:700px) { .hero { min-height:680px; }.hero-orbit { width:135px; height:135px; right:18px; bottom:68px; }.hero-orbit span { width:170px; font-size:7px; }.contact-links { display:grid; }.button-github { justify-content:space-between; }.footer-links { gap:15px; } }
