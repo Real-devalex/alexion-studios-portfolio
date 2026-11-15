@@ -4,19 +4,20 @@
 export const PROFILE = {
   name: 'Daniel James',
   handle: 'Real-devalex',
-  role: 'Full-stack developer',
+  role: 'Full-stack and game developer',
   studio: 'Alexion Studios',
   location: 'Ibadan, Nigeria',
   email: 'alexionstudios@gmail.com',
   github: 'https://github.com/Real-devalex',
   summary:
-    'Self-taught full-stack developer and founder of Alexion Studios. I build web apps, mobile apps and developer tools, from the database and security rules to the interface people touch. My work ranges from a school results portal and a learning platform with 377 ready lessons to a programming language of my own.',
+    'Self-taught full-stack and game developer, final-year B.Sc. Computer Science student and founder of Alexion Studios. I build web apps, mobile apps, game servers and developer tools, from the database and security rules to the interface people touch. I also script SA-MP and FiveM servers, and I turn ideas and dreams into working products for a living.',
 }
 
 export const SKILLS = [
   ['Front end', ['React', 'TypeScript', 'JavaScript', 'Next.js', 'Vite', 'Tailwind CSS', 'HTML and CSS']],
   ['Back end and data', ['Node.js', 'Supabase', 'PostgreSQL', 'Row level security', 'Drizzle ORM', 'MySQL', 'Python', 'PHP']],
   ['Mobile and desktop', ['React Native', 'Expo', 'Capacitor (Android)', 'C#', '.NET 8', 'C++']],
+  ['Game and server development', ['SA-MP (Pawn)', 'FiveM (Lua and JavaScript)', 'MySQL-backed game servers', 'Player account panels', 'C++', 'C#', 'Game design documents']],
   ['Quality and delivery', ['Vitest', 'pytest', 'GitHub Actions', 'Vercel', 'Docker', 'Service workers and offline apps']],
 ]
 
@@ -101,12 +102,25 @@ export const PROJECTS = [
     highlights: ['Detailed planning and handover documents.', 'Tested animation and scene systems.'],
   },
   {
-    slug: 'slime-wrld', name: 'Slime Wrld', kind: 'Community website', status: 'Private build', color: '#a5ff47', year: '2026',
-    tagline: 'A website for a roleplay game server, with player accounts linked to the game.',
-    tech: ['Next.js', 'TypeScript', 'MySQL', 'Discord linking'],
+    slug: 'slime-wrld', name: 'Slime Wrld', kind: 'Game server website', status: 'Private build', color: '#a5ff47', year: '2026',
+    tagline: 'The website for a SA-MP roleplay server, with player accounts linked to the game.',
+    tech: ['SA-MP', 'Next.js', 'TypeScript', 'MySQL', 'Discord linking'],
     about: 'Players register a user control panel account, verify it with a six-digit code linked to Discord, and manage their in-game characters from the site.',
     highlights: ['Account linking and verification flow.', 'Character creation and switching APIs backed by MySQL.'],
   },
+]
+
+// The "player card" on the home page. level is 1 to 5 and is a self rating: change it to match how you see yourself.
+export const CLASSES = ['Full-stack dev', 'Game dev', 'Server dev']
+export const SKILL_TREE = [
+  ['Web apps', 5], ['Backends and data', 4], ['Game servers', 4], ['Mobile', 3], ['Languages and tools', 3],
+]
+
+// The game and server section. icon names match the Icon component in main.jsx.
+export const GAMEDEV = [
+  { icon: 'gamepad', title: 'SA-MP servers', text: 'Roleplay gamemodes in Pawn: jobs, factions, vehicles, inventories and admin tools, backed by MySQL, with web panels where players manage their accounts and characters.', tags: ['Pawn', 'MySQL', 'Gamemodes', 'Player panels'] },
+  { icon: 'server', title: 'FiveM resources', text: 'Server-side and client-side resources for FiveM roleplay servers, built with Lua and JavaScript: custom scripts, interfaces and economy systems.', tags: ['Lua', 'JavaScript', 'NUI', 'Resources'] },
+  { icon: 'cube', title: 'Games and engines', text: 'Original game ideas taken from design document to playable build: a football manager with 3D match scenes, and ALX, a programming language made for game development.', tags: ['C++', 'C#', 'TypeScript', 'Game design'] },
 ]
 
 export const PROCESS = [

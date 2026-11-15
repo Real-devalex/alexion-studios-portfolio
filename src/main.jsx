@@ -1,6 +1,6 @@
 import { StrictMode, useEffect, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import { PROFILE, SKILLS, PROJECTS, PROCESS, EXPERIENCE, EDUCATION } from './data'
+import { PROFILE, SKILLS, PROJECTS, PROCESS, EXPERIENCE, EDUCATION, CLASSES, SKILL_TREE, GAMEDEV } from './data'
 import './styles.css'
 import './site.css'
 
@@ -14,6 +14,19 @@ function useRoute() {
     return () => window.removeEventListener('hashchange', on)
   }, [])
   return path
+}
+
+/** Small animated icons. Each one moves on its own and reacts when you point at it. */
+const ICONS = {
+  gamepad: <><path d="M6 11h4M8 9v4" /><circle cx="15.5" cy="10.5" r=".9" fill="currentColor" /><circle cx="18" cy="13" r=".9" fill="currentColor" /><path d="M7 5h10a4 4 0 0 1 4 4.2l-.6 5.6A3 3 0 0 1 17.5 17c-.9 0-1.5-.4-2.2-1.2L14 14.5h-4l-1.3 1.3c-.7.8-1.3 1.2-2.2 1.2a3 3 0 0 1-2.9-2.2L3 9.200A4 4 0 0 1 7 5z" /></>,
+  server: <><rect x="3" y="4" width="18" height="6" rx="1.5" /><rect x="3" y="14" width="18" height="6" rx="1.5" /><circle cx="7" cy="7" r=".8" fill="currentColor" /><circle cx="7" cy="17" r=".8" fill="currentColor" /><path d="M11 7h6M11 17h6" /></>,
+  cube: <><path d="M12 3 4 7.500v9L12 21l8-4.500v-9L12 3z" /><path d="M4 7.500 12 12l8-4.500M12 12v9" /></>,
+  code: <><path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16" /></>,
+  rocket: <><path d="M5 15c-1 1-1.500 3.500-1.500 5.500 2 0 4.500-.5 5.500-1.500M14 4c3-1 6-1 6-1s0 3-1 6l-7 7-5-5 7-7z" /><circle cx="15" cy="9" r="1.300" /></>,
+  shield: <><path d="M12 3 4.500 6v5.500c0 4.500 3 8 7.500 9.500 4.500-1.500 7.500-5 7.500-9.500V6L12 3z" /><path d="m9 12 2 2 4-4" /></>,
+}
+function Icon({ name, size = 28 }) {
+  return <svg className={`ico ico-${name}`} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{ICONS[name]}</svg>
 }
 
 /** Fades a block in when it scrolls into view. */
@@ -136,6 +149,21 @@ function GitHubLive() {
 }
 
 /* ── pages ───────────────────────────────────────────────────────── */
+/** A game-style "player card": class, level and a skill tree. A playful way to show range. */
+function PlayerCard() {
+  return (
+    <div className="player rv-pop" style={{ animationDelay: '250ms' }} aria-label="Player card">
+      <div className="player-top"><span className="player-tag">PLAYER ONE</span><span className="player-lv">LV 400</span></div>
+      <p className="player-name">{PROFILE.name}</p>
+      <p className="player-class">{CLASSES.join(' · ')}</p>
+      <div className="xp">{SKILL_TREE.map(([name, lv], i) => (
+        <div key={name} className="xp-row"><span>{name}</span><div className="xp-pips">{[1, 2, 3, 4, 5].map(n => <i key={n} className={n <= lv ? 'on' : ''} style={{ animationDelay: `${600 + i * 120 + n * 70}ms` }} />)}</div></div>
+      ))}</div>
+      <p className="player-foot"><Icon name="gamepad" size={16} /> Quest: build something people love</p>
+    </div>
+  )
+}
+
 function Home() {
   const featured = PROJECTS.slice(0, 4)
   return (
@@ -144,12 +172,13 @@ function Home() {
         <div className="orb orb-one" /><div className="orb orb-two" />
         <div className="availability"><span /> Open to jobs and select projects · {PROFILE.location}</div>
         <p className="eyebrow">{PROFILE.role} · {PROFILE.studio}</p>
-        <h1 className="hero-h">I build <Typer words={['web apps that work.', 'apps people use daily.', 'secure, offline-ready tools.', 'things from scratch.']} /></h1>
+        <h1 className="hero-h">I build <Typer words={['web apps that work.', 'SA-MP and FiveM servers.', 'games from scratch.', 'secure, offline-ready tools.']} /></h1>
         <p className="hero-copy">{PROFILE.summary}</p>
         <div className="hero-actions">
           <a className="button button-primary" href="#/projects">See my projects <span>↗</span></a>
           <a className="button button-ghost" href="#/resume">View resume</a>
         </div>
+        <PlayerCard />
         <div className="stat-row">
           {[[String(PROJECTS.length), 'projects built'], ['377', 'lessons in StudyNerd'], [String(PROJECTS.filter(p => p.status === 'Live').length), 'live products'], ['100%', 'self-taught']].map(([n, l], i) => <div key={l} className="stat rv-pop" style={{ animationDelay: `${300 + i * 90}ms` }}><b>{n}</b><span>{l}</span></div>)}
         </div>
@@ -158,6 +187,12 @@ function Home() {
       <section className="section">
         <Reveal className="section-heading row-heading"><div><p className="eyebrow">Selected work</p><h2>Proof in the <i>making.</i></h2></div><a className="text-link" href="#/projects">All projects <span>↗</span></a></Reveal>
         <div className="grid">{featured.map((p, i) => <ProjectCard key={p.slug} p={p} delay={i * 90} />)}</div>
+      </section>
+
+      <section className="section gamedev">
+        <Reveal className="section-heading"><p className="eyebrow">Game and server development</p><h2>I build the <i>worlds</i> too.</h2></Reveal>
+        <p className="page-sub">Beyond web apps, I script multiplayer game servers and design original games. I started with ideas and dreams, and made building them my profession.</p>
+        <div className="grid">{GAMEDEV.map((g, i) => <Reveal key={g.title} delay={i * 100}><div className="card game-card"><div className="game-ico"><Icon name={g.icon} size={34} /></div><div className="card-body"><h3>{g.title}</h3><p>{g.text}</p><Tags list={g.tags} /></div></div></Reveal>)}</div>
       </section>
 
       <section className="section skills-section">
