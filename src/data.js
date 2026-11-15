@@ -120,5 +120,4 @@ export const EXPERIENCE = [
   ['Founder and developer', 'Alexion Studios', 'Ongoing', 'Design and build web apps, mobile apps and tools for clients and for the studio. Own products from planning to deployment, including databases, security and releases.'],
 ]
 
-// Add entries like ['B.Sc. Computer Science', 'Your university', '2023 to 2027'] and they appear on the resume.
-export const EDUCATION = []
+export const EDUCATION = [['B.Sc. Computer Science (400 level, in progress)', 'Benue State University', 'Current']]
