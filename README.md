@@ -1,19 +1,21 @@
-# Alexion Studios
+# Alexion Studios portfolio
 
-This is the working home for Alexion Studios: company setup, portfolio projects, marketing, client outreach, and career materials.
+Personal portfolio and resume of the founder of Alexion Studios. React and Vite, with hash routes so it works on any static host.
 
-## Start here
+- **Home**: hero, selected work, toolbox, process and live numbers from the GitHub API.
+- **Projects**: every project with a case study page (`#/projects/<slug>`).
+- **Resume**: a one-page resume. Use "Download as PDF" and choose "Save as PDF".
 
-1. Complete the company profile in `01-company/COMPANY-FOUNDATION.md`.
-2. Use `02-brand-and-marketing/FACEBOOK-PROFESSIONAL-MODE.md` to set up your Facebook professional profile.
-3. Follow the content plan in `02-brand-and-marketing/CONTENT-PLAN.md`.
-4. Keep portfolio projects in `03-portfolio-projects/` and update `04-career/RESUME-MASTER.md` as you finish work.
+## Change the content
 
-## Main services (draft)
+Everything lives in `src/data.js`: profile, skills, projects, experience and education. Edit it and the portfolio and the resume both update.
 
-- Website and web app development
-- Game development
-- Social media marketing and content support
-- Custom technical solutions
+## Run it
 
-These are drafts. We will refine them around the work you want most.
+```bash
+npm install
+npm run dev
+npm run build
+```
+
+Pushes to `main` publish through the GitHub Pages workflow in `.github/workflows`. The company planning notes live in `src/Docs`.
