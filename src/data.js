@@ -50,6 +50,19 @@ export const PROJECTS = [
     ],
   },
   {
+    slug: 'luxe-lashes', name: 'Luxe Lashes by Mimi', kind: 'Booking website for a lash studio', status: 'In development', color: '#e8b4a0', year: '2026',
+    tagline: 'A booking website for a lash artist in Ibadan, with an admin area so she can run her bookings herself.',
+    live: 'https://www.luxelashesbymimi.com.ng',
+    tech: ['React', 'Vite', 'Neon Postgres', 'Vercel Blob', 'Resend email', 'Vercel'],
+    about: 'A client project, still in progress and not yet reviewed by the client. Prices, photos and reviews on the live site are placeholders until she confirms the real ones.',
+    highlights: [
+      'A four-step booking wizard: pick a style, pick a date and time, add details, review and send.',
+      'A booking API backed by a Postgres database, with email notifications through Resend on the studio\'s own domain.',
+      'A password-protected admin area to view bookings and manage services, opening hours and days off.',
+      'A photo pipeline using Vercel Blob storage, deployed on Vercel with a custom .com.ng domain.',
+    ],
+  },
+  {
     slug: 'everyai', name: 'EveryAI', kind: 'SaaS platform', status: 'Private build', color: '#2ce7da', year: '2026',
     tagline: 'An AI-powered WhatsApp automation platform.',
     tech: ['Next.js 16', 'TypeScript', 'Drizzle ORM', 'PostgreSQL', 'Better Auth', 'Turborepo', 'pnpm', 'Docker', 'Vitest'],
