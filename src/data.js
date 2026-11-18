@@ -50,15 +50,15 @@ export const PROJECTS = [
     ],
   },
   {
-    slug: 'luxe-lashes', name: 'Luxe Lashes by Mimi', kind: 'Booking website for a lash studio', status: 'In development', color: '#e8b4a0', year: '2026',
+    slug: 'luxe-lashes', name: 'Luxe Lashes by Mimi', kind: 'Booking website for a lash studio', status: 'Live', color: '#e8b4a0', year: '2026',
     tagline: 'A booking website for a lash artist in Ibadan, with an admin area so she can run her bookings herself.',
     live: 'https://www.luxelashesbymimi.com.ng',
     tech: ['React', 'Vite', 'Neon Postgres', 'Vercel Blob', 'Resend email', 'Vercel'],
-    about: 'A client project, still in progress and not yet reviewed by the client. Prices, photos and reviews on the live site are placeholders until she confirms the real ones.',
+    about: 'A finished client project, built for a lash artist in Ibadan and reviewed by the client. It has a custom .com.ng domain, a booking flow for her customers and an admin area where she manages her own bookings.',
     highlights: [
       'A four-step booking wizard: pick a style, pick a date and time, add details, review and send.',
       'A booking API backed by a Postgres database, with email notifications through Resend on the studio\'s own domain.',
-      'A password-protected admin area to view bookings and manage services, opening hours and days off.',
+      'A password-protected admin area to view bookings and manage services, opening hours, days off and the photo gallery, with an installable phone app version.',
       'A photo pipeline using Vercel Blob storage, deployed on Vercel with a custom .com.ng domain.',
     ],
   },
